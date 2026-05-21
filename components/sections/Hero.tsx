@@ -80,7 +80,7 @@ export function Hero() {
                 className="w-1.5 h-1.5 rounded-full bg-brand-purple motion-safe:animate-pulse"
                 aria-hidden="true"
               />
-              Atracción de talento clave y cobertura ágil
+              Reclutamiento Activo y Cobertura Ágil
             </div>
 
             {/* H1 — mobile-first: 4xl base → 5xl sm → [4rem] lg → [4.5rem] xl */}
@@ -88,7 +88,10 @@ export function Hero() {
               className="font-display text-4xl sm:text-5xl lg:text-[4rem] xl:text-[4.5rem]
                 font-extrabold text-white leading-[1.06] mb-5 sm:mb-6"
             >
-              Tu siguiente contratación
+              <span className="block text-brand-blue text-sm sm:text-base lg:text-lg font-bold uppercase tracking-[0.2em] mb-4">
+                Agencia de Reclutamiento en Monterrey
+              </span>
+              Tu siguiente contratación de personal
               <br />
               <span className="text-gradient-blue">
                 no debería tardar 6 semanas.
@@ -98,9 +101,9 @@ export function Hero() {
             {/* Subheadline — base → lg/xl */}
             <p className="text-white/65 text-base sm:text-lg lg:text-xl leading-relaxed
               max-w-xl mb-8 lg:mb-10">
-              Alianza RH simplifica la preselección inicial y utiliza{' '}
+              Como agencia de reclutamiento especializado, Alianza RH simplifica la preselección inicial y utiliza{' '}
               <strong className="text-white font-semibold">anuncios digitales dirigidos</strong>{' '}
-              para atraer a profesionales calificados que ya están trabajando. Cobertura ágil:{' '}
+              para atraer a profesionales calificados. Cobertura ágil:{' '}
               <strong className="text-white font-semibold">máximo 14 días</strong> para vacantes administrativas y operativas, y de{' '}
               <strong className="text-white font-semibold">3 a 4 semanas</strong> para puestos especializados o gerenciales.
             </p>

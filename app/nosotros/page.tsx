@@ -6,7 +6,7 @@ import {
 } from '@/components/sections/AboutInteractive'
 
 export const metadata: Metadata = {
-  title: 'Nosotros | Alianza RH',
+  title: 'Quiénes Somos | Reclutamiento y Headhunting en Monterrey | Alianza RH',
   description:
     'Conoce a Alianza RH. Reclutamiento especializado y headhunting con criterio humano y tecnología avanzada en todo México. Nacidos en Monterrey, Nuevo León.',
 }
