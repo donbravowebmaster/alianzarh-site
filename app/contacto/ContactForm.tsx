@@ -11,6 +11,7 @@ type FormState = {
   vacantes: string
   urgencia: string
   mensaje: string
+  honeypot: string
 }
 
 const initialForm: FormState = {
@@ -22,6 +23,7 @@ const initialForm: FormState = {
   vacantes: '',
   urgencia: '',
   mensaje: '',
+  honeypot: '',
 }
 
 const inputClass = [
@@ -59,6 +61,7 @@ export function ContactForm() {
   const [form, setForm] = useState<FormState>(initialForm)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -66,10 +69,39 @@ export function ContactForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    
+    // Validación client-side básica
+    if (!form.nombre.trim() || !form.empresa.trim() || !form.email.trim()) {
+      setError('Por favor, completa todos los campos requeridos (*).')
+      return
+    }
+
     setIsSubmitting(true)
-    await new Promise<void>((resolve) => setTimeout(resolve, 1200))
-    setIsSubmitting(false)
-    setSubmitted(true)
+    setError(null)
+
+    try {
+      const response = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setSubmitted(true)
+        setForm(initialForm)
+      } else {
+        setError(data.error || 'Ocurrió un error al enviar el formulario. Intenta de nuevo.')
+      }
+    } catch (err) {
+      console.error('Error al enviar formulario:', err)
+      setError('Hubo un problema de conexión. Por favor, verifica tu internet e intenta de nuevo.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -112,6 +144,20 @@ export function ContactForm() {
           noValidate
           className="bg-white rounded-2xl p-8 lg:p-10 border border-gray-100 shadow-sm"
         >
+          {/* Campo oculto Honeypot contra spam */}
+          <div className="absolute opacity-0 -z-50 w-0 h-0 overflow-hidden" aria-hidden="true">
+            <label htmlFor="honeypot">Dejar vacío si eres humano</label>
+            <input
+              id="honeypot"
+              name="honeypot"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={form.honeypot}
+              onChange={handleChange}
+            />
+          </div>
+
           <h2 className="font-display text-2xl font-extrabold text-brand-dark mb-7">
             Cuéntanos sobre tu empresa
           </h2>
@@ -261,6 +307,15 @@ export function ContactForm() {
               className={`${inputClass} resize-none`}
             />
           </div>
+
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm font-medium flex items-center gap-2">
+              <svg className="w-5 h-5 shrink-0 text-red-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span>{error}</span>
+            </div>
+          )}
 
           <button
             type="submit"
