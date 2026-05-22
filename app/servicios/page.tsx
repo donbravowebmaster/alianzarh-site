@@ -50,7 +50,7 @@ const services = [
       'Búsqueda activa de profesionales trabajando en tu competencia directa',
       'Acercamiento profesional y confidencial con directivos y gerentes',
       'Evaluación profunda de la forma de liderar y valores del candidato',
-      'Garantía de reemplazo sin costo adicional de hasta 90 días por contrato',
+      'Garantía de reemplazo sin costo adicional de hasta 60 días* por contrato',
     ],
   },
   {

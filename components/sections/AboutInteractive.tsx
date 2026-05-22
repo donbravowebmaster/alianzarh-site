@@ -258,7 +258,7 @@ export function ValuesBentoGrid() {
             Garantizamos que tu contratación sea rentable.
           </h3>
           <p className="text-brand-gray text-xs sm:text-sm leading-relaxed">
-            El éxito no es cerrar una vacante hoy. Es que el profesional aporte valor constante a tu empresa. Respaldamos nuestro compromiso con una garantía de reemplazo formal de hasta 90 días por contrato.
+            El éxito no es cerrar una vacante hoy. Es que el profesional aporte valor constante a tu empresa. Respaldamos nuestro compromiso con una garantía de reemplazo formal de hasta 60 días* por contrato.
           </p>
         </div>
 
@@ -272,7 +272,7 @@ export function ValuesBentoGrid() {
             </div>
             <div>
               <p className="text-brand-dark font-extrabold text-sm">Garantía Escrita</p>
-              <p className="text-brand-gray text-[11px] font-medium">90 Días de Cobertura de Respaldo</p>
+              <p className="text-brand-gray text-[11px] font-medium">Hasta 60 Días* de Cobertura de Respaldo</p>
             </div>
           </div>
         </div>

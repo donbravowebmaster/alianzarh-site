@@ -290,7 +290,7 @@ export function HeadhuntingPreview() {
 
       {/* Sello Físico */}
       <div className="absolute top-4 right-4 flex items-center justify-center bg-brand-purple/20 border border-brand-purple/40 text-brand-purple text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md animate-glow-pulse">
-        90 Días Garantía
+        60 Días Garantía*
       </div>
 
       {/* Executive Card */}

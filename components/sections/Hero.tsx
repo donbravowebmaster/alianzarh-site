@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const stats = [
   { value: '30+ Años', label: 'Trayectoria del equipo' },
-  { value: '90 Días', label: 'Garantía de reposición' },
+  { value: 'Hasta 60 días*', label: 'Garantía de reposición' },
   { value: '14 Días - 4 Sem.', label: 'Cobertura según perfil' },
 ]
 
@@ -199,7 +199,7 @@ export function Hero() {
                 <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between">
                   <span className="text-white/40 text-xs sm:text-sm font-medium">Garantía de reposición</span>
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-white font-bold text-sm sm:text-base tabular-nums">90 días</span>
+                    <span className="text-white font-bold text-sm sm:text-base tabular-nums">hasta 60 días*</span>
                     <span className="text-emerald-400 text-xs sm:text-sm font-semibold">estándar</span>
                   </div>
                 </div>
