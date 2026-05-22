@@ -10,6 +10,7 @@
     --brand-gray: #626262;
     --brand-dark: #0d1117;
     --font-be-vietnam: 'Be Vietnam Pro', sans-serif;
+    color-scheme: light;
   }
 
   * {

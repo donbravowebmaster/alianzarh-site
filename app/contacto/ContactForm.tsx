@@ -28,7 +28,7 @@ const initialForm: FormState = {
 
 const inputClass = [
   'w-full border border-gray-200 bg-white',
-  'text-brand-dark placeholder:text-gray-400',
+  'text-gray-900 placeholder:text-gray-400',
   'rounded-xl px-4 py-3.5 text-sm',
   'transition-[border-color,box-shadow] duration-150 ease-out',
   'focus-visible:outline-none focus-visible:ring-2',
