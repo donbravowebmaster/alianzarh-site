@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export async function POST(request: Request) {
   try {
@@ -18,6 +19,33 @@ export async function POST(request: Request) {
         { success: false, error: 'Por favor completa todos los campos requeridos.' },
         { status: 400 }
       )
+    }
+
+    // 2.5 Inserción en base de datos Supabase (Defensivo / Tolerancia a fallas)
+    let savedInDb = false
+    try {
+      const { error: dbError } = await supabaseAdmin
+        .from('leads')
+        .insert([
+          {
+            nombre,
+            empresa,
+            cargo: cargo || null,
+            email,
+            telefono: telefono || null,
+            vacantes: vacantes || null,
+            urgencia: urgencia || null,
+            mensaje: mensaje || null,
+          },
+        ])
+
+      if (dbError) {
+        throw dbError
+      }
+      savedInDb = true
+      console.log('Lead guardado exitosamente en Supabase.')
+    } catch (dbErr) {
+      console.error('Error al guardar lead en Supabase (Se continuará con el envío del correo de contingencia):', dbErr)
     }
 
     // 3. Configuración del transportador SMTP de Hostinger
@@ -131,7 +159,7 @@ export async function POST(request: Request) {
     // 6. Enviar
     await transporter.sendMail(mailOptions)
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ success: true, savedInDb })
   } catch (error: any) {
     console.error('Error al enviar correo por SMTP:', error)
     return NextResponse.json(
