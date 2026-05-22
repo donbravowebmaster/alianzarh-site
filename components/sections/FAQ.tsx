@@ -21,7 +21,7 @@ export const faqItems = [
   {
     question: '¿Qué pasa si el candidato colocado no funciona?',
     answer:
-      'Ofrecemos una garantía estándar de reposición por escrito de 90 días. Si el candidato se retira voluntariamente de la empresa o no supera la evaluación de desempeño y adaptación cultural en sus primeros 3 meses, iniciamos una nueva búsqueda completa sin ningún costo adicional para ti.',
+      'Ofrecemos una garantía de reposición por escrito en cada contratación. Si el candidato se retira voluntariamente de la empresa o no supera la evaluación de desempeño y adaptación cultural durante el periodo de garantía acordado por contrato, iniciamos una nueva búsqueda completa sin ningún costo adicional para ti.',
   },
   {
     question: '¿Cuánto cuesta el servicio?',
