@@ -49,27 +49,31 @@ export function HowItWorks() {
         </header>
 
         <div className="grid md:grid-cols-3 gap-8 relative">
-          {/* Línea conectora — desktop únicamente, aria-hidden */}
-          <div
-            className="hidden md:block absolute top-[22px]
-              left-[calc(16.67%+22px)] right-[calc(16.67%+22px)]
-              h-px border-t-2 border-dashed border-brand-blue/20"
-            aria-hidden="true"
-          />
-
-          {steps.map((step) => (
+          {steps.map((step, idx) => (
             <article key={step.num} className="relative flex flex-col gap-4">
-              <div className="flex items-center gap-4">
-                {/* Número + ícono */}
+              <div className="flex items-center gap-4 relative">
+                {/* Número + ícono con fondo sólido para enmascarar la línea */}
                 <div
-                  className="w-11 h-11 rounded-full bg-brand-blue/10 border border-brand-blue/20
-                    flex items-center justify-center shrink-0 text-brand-blue relative z-10"
+                  className="flex items-center gap-4 relative z-10 bg-white pr-4"
                 >
-                  {step.icon}
+                  <div
+                    className="w-11 h-11 rounded-full bg-brand-blue/10 border border-brand-blue/20
+                      flex items-center justify-center shrink-0 text-brand-blue"
+                  >
+                    {step.icon}
+                  </div>
+                  <span className="font-display text-xs font-extrabold text-brand-blue/40 tabular-nums">
+                    {step.num}
+                  </span>
                 </div>
-                <span className="font-display text-xs font-extrabold text-brand-blue/40 tabular-nums">
-                  {step.num}
-                </span>
+
+                {/* Línea conectora — solo para los primeros pasos en desktop */}
+                {idx < steps.length - 1 && (
+                  <div
+                    className="hidden md:block absolute top-1/2 -translate-y-1/2 left-0 -right-10 h-px border-t-2 border-dashed border-brand-blue/20 -z-10"
+                    aria-hidden="true"
+                  />
+                )}
               </div>
 
               <h3 className="font-display text-lg font-bold text-brand-dark">
