@@ -2,6 +2,17 @@ import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 import { supabaseAdmin } from '@/lib/supabase'
 
+// Función de escape de HTML para prevenir inyecciones (XSS / HTML Injection) en las plantillas de correo
+function escapeHtml(text: string): string {
+  if (!text) return ''
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -66,6 +77,16 @@ export async function POST(request: Request) {
       },
     })
 
+    // Escapar variables de usuario para renderizado seguro en los correos HTML
+    const safeNombre = escapeHtml(nombre)
+    const safeEmpresa = escapeHtml(empresa)
+    const safeCargo = cargo ? escapeHtml(cargo) : ''
+    const safeEmail = escapeHtml(email)
+    const safeTelefono = telefono ? escapeHtml(telefono) : ''
+    const safeVacantes = vacantes ? escapeHtml(vacantes) : ''
+    const safeUrgencia = urgencia ? escapeHtml(urgencia) : ''
+    const safeMensaje = mensaje ? escapeHtml(mensaje).replace(/\n/g, '<br>') : ''
+
     // 4. Plantilla de correo HTML premium para notificaciones internas (Admin)
     const emailHtml = `
       <!DOCTYPE html>
@@ -107,43 +128,43 @@ export async function POST(request: Request) {
                       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; padding: 16px;">
                         <tr>
                           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; width: 35%; text-transform: uppercase; letter-spacing: 0.05em;">Nombre</td>
-                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><strong>${nombre}</strong></td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><strong>${safeNombre}</strong></td>
                         </tr>
                         <tr>
                           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Empresa</td>
-                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><strong>${empresa}</strong></td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><strong>${safeEmpresa}</strong></td>
                         </tr>
                         <tr>
                           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Cargo / Puesto</td>
-                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${cargo || '<em>No especificado</em>'}</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${safeCargo || '<em>No especificado</em>'}</td>
                         </tr>
                         <tr>
                           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Email</td>
-                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><a href="mailto:${email}" style="color: #357ee3; text-decoration: none; font-weight: 600;">${email}</a></td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><a href="mailto:${safeEmail}" style="color: #357ee3; text-decoration: none; font-weight: 600;">${safeEmail}</a></td>
                         </tr>
                         <tr>
                           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Teléfono</td>
-                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${telefono || '<em>No especificado</em>'}</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${safeTelefono || '<em>No especificado</em>'}</td>
                         </tr>
                         <tr>
                           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Vacantes</td>
-                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${vacantes || '<em>No especificado</em>'}</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${safeVacantes || '<em>No especificado</em>'}</td>
                         </tr>
                         <tr>
                           <td style="padding: 10px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Urgencia</td>
-                          <td style="padding: 10px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: ${urgencia === 'inmediata' ? '700' : 'normal'}; color: ${urgencia === 'inmediata' ? '#ef4444' : '#0d1117'};">
-                            ${urgencia === 'inmediata' ? 'Inmediata' : urgencia === 'pronto' ? 'Próximas 2-4 semanas' : urgencia === 'planificacion' ? 'Planificación (1-3 meses)' : urgencia || '<em>No especificada</em>'}
+                          <td style="padding: 10px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: ${safeUrgencia === 'inmediata' ? '700' : 'normal'}; color: ${safeUrgencia === 'inmediata' ? '#ef4444' : '#0d1117'};">
+                            ${safeUrgencia === 'inmediata' ? 'Inmediata' : safeUrgencia === 'pronto' ? 'Próximas 2-4 semanas' : safeUrgencia === 'planificacion' ? 'Planificación (1-3 meses)' : safeUrgencia || '<em>No especificada</em>'}
                           </td>
                         </tr>
                       </table>
                       
-                      ${mensaje ? `
+                      ${safeMensaje ? `
                       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border-left: 4px solid #357ee3; padding: 20px; border-radius: 8px; margin-top: 24px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
                         <tr>
                           <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #64748b; padding-bottom: 8px; letter-spacing: 0.05em;">Perfiles solicitados / Mensaje:</td>
                         </tr>
                         <tr>
-                          <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-style: italic; color: #1e293b; line-height: 1.6; padding: 0;">${mensaje.replace(/\n/g, '<br>')}</td>
+                          <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-style: italic; color: #1e293b; line-height: 1.6; padding: 0;">${safeMensaje}</td>
                         </tr>
                       </table>
                       ` : ''}
@@ -200,9 +221,9 @@ export async function POST(request: Request) {
                   <!-- Main Content -->
                   <tr>
                     <td style="padding: 40px; background-color: #ffffff;">
-                      <h2 style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0d1117; font-size: 24px; font-weight: 800; margin: 0 0 16px 0; line-height: 1.25;">¡Hola, ${nombre}! 👋</h2>
+                      <h2 style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0d1117; font-size: 24px; font-weight: 800; margin: 0 0 16px 0; line-height: 1.25;">¡Hola, ${safeNombre}! 👋</h2>
                       <p style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #475569; line-height: 1.6; margin: 0 0 32px 0;">
-                        Queremos agradecerte por tu interés en Alianza RH. Confirmamos que hemos recibido tu solicitud de información de forma exitosa. Nos entusiasma mucho la posibilidad de colaborar con <strong>${empresa}</strong> para optimizar sus procesos de selección de personal.
+                        Queremos agradecerte por tu interés en Alianza RH. Confirmamos que hemos recibido tu solicitud de información de forma exitosa. Nos entusiasma mucho la posibilidad de colaborar con <strong>${safeEmpresa}</strong> para optimizar sus procesos de selección de personal.
                       </p>
                       
                       <!-- Request Summary Card -->
@@ -214,33 +235,33 @@ export async function POST(request: Request) {
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                               <tr>
                                 <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b; width: 40%;">Empresa</td>
-                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 700;">${empresa}</td>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 700;">${safeEmpresa}</td>
                               </tr>
-                              ${cargo ? `
+                              ${safeCargo ? `
                               <tr>
                                 <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Tu Cargo</td>
-                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">${cargo}</td>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">${safeCargo}</td>
                               </tr>
                               ` : ''}
-                              ${telefono ? `
+                              ${safeTelefono ? `
                               <tr>
                                 <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Teléfono</td>
-                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">${telefono}</td>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">${safeTelefono}</td>
                               </tr>
                               ` : ''}
-                              ${vacantes ? `
+                              ${safeVacantes ? `
                               <tr>
                                 <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Vacantes a Cubrir</td>
                                 <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">
-                                  ${vacantes === '30+' ? 'Más de 30 posiciones' : vacantes + ' posiciones'}
+                                  ${safeVacantes === '30+' ? 'Más de 30 posiciones' : safeVacantes + ' posiciones'}
                                 </td>
                               </tr>
                               ` : ''}
-                              ${urgencia ? `
+                              ${safeUrgencia ? `
                               <tr>
                                 <td style="padding: 8px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Urgencia</td>
                                 <td style="padding: 8px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">
-                                  ${urgencia === 'inmediata' ? 'Inmediata (esta semana)' : urgencia === 'pronto' ? 'Próximas 2-4 semanas' : urgencia === 'planificacion' ? 'Planificación (1-3 meses)' : urgencia}
+                                  ${safeUrgencia === 'inmediata' ? 'Inmediata (esta semana)' : safeUrgencia === 'pronto' ? 'Próximas 2-4 semanas' : safeUrgencia === 'planificacion' ? 'Planificación (1-3 meses)' : safeUrgencia}
                                 </td>
                               </tr>
                               ` : ''}
@@ -377,15 +398,15 @@ export async function POST(request: Request) {
     const adminMailOptions = {
       from: `"Alianza RH Leads" <${senderEmail}>`,
       to: recipientEmail,
-      replyTo: email, // Al hacer clic en "Responder" responderá directamente al prospecto
-      subject: `Nuevo Lead: ${empresa} (${nombre})`,
+      replyTo: safeEmail, // Al hacer clic en "Responder" responderá directamente al prospecto de manera segura
+      subject: `Nuevo Lead: ${safeEmpresa} (${safeNombre})`,
       html: emailHtml,
     }
 
     // 5.5. Configurar opciones del correo de auto-respuesta (Cliente)
     const clientMailOptions = {
       from: `"Alianza RH" <${senderEmail}>`,
-      to: email,
+      to: email, // El remitente SMTP valida esto, pero usamos email del cuerpo que ya validamos
       subject: `¡Hemos recibido tu solicitud de demo! — Alianza RH`,
       html: clientEmailHtml,
     }
