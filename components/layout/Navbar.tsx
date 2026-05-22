@@ -32,7 +32,9 @@ export function Navbar() {
         }`}
     >
       <nav
-        className="container-max flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4"
+        className={`container-max flex items-center justify-between px-4 sm:px-6 lg:px-8 transition-all duration-300 ease-out ${
+          scrolled ? 'py-3.5' : 'py-5'
+        }`}
         aria-label="Navegación principal"
       >
         <Link
@@ -78,13 +80,13 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden md:flex items-center">
+        <div className="hidden md:flex items-center gap-5">
           <Link
             href="/contacto"
             className={`bg-brand-blue hover:bg-brand-blue-dark text-white
               text-sm font-semibold px-5 py-2.5 rounded-lg
-              transition-[background-color,box-shadow] duration-200 ease-out
-              hover:shadow-lg hover:shadow-brand-blue/30
+              transition-[background-color,box-shadow,transform] duration-200 ease-out
+              hover:shadow-lg hover:shadow-brand-blue/30 hover:-translate-y-0.5
               focus-visible:outline-none focus-visible:ring-2
               focus-visible:ring-brand-blue focus-visible:ring-offset-2
               ${
@@ -95,6 +97,51 @@ export function Navbar() {
           >
             Cotizar Vacante
           </Link>
+
+          {/* Divisor vertical sutil */}
+          <span className={`h-5 w-px ${scrolled ? 'bg-gray-200' : 'bg-white/20'}`} aria-hidden="true" />
+
+          {/* Iconos de Redes Sociales */}
+          <div className="flex items-center gap-3.5">
+            <a
+              href="https://linkedin.com"
+              aria-label="LinkedIn de Alianza RH"
+              className={`transition-[color,transform] duration-150 hover:-translate-y-0.5 rounded focus-visible:outline-none focus-visible:ring-2
+                ${scrolled ? 'text-brand-dark/50 hover:text-brand-blue focus-visible:ring-brand-blue/50' : 'text-white/60 hover:text-white focus-visible:ring-white/50'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+              </svg>
+            </a>
+            <a
+              href="https://facebook.com"
+              aria-label="Facebook de Alianza RH"
+              className={`transition-[color,transform] duration-150 hover:-translate-y-0.5 rounded focus-visible:outline-none focus-visible:ring-2
+                ${scrolled ? 'text-brand-dark/50 hover:text-brand-blue focus-visible:ring-brand-blue/50' : 'text-white/60 hover:text-white focus-visible:ring-white/50'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+              </svg>
+            </a>
+            <a
+              href="https://instagram.com"
+              aria-label="Instagram de Alianza RH"
+              className={`transition-[color,transform] duration-150 hover:-translate-y-0.5 rounded focus-visible:outline-none focus-visible:ring-2
+                ${scrolled ? 'text-brand-dark/50 hover:text-brand-blue focus-visible:ring-brand-blue/50' : 'text-white/60 hover:text-white focus-visible:ring-white/50'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+          </div>
         </div>
 
         {/* Hamburguer — p-3 para touch target ≥ 44px */}
@@ -178,6 +225,46 @@ export function Navbar() {
               >
                 Cotizar Vacante
               </Link>
+            </li>
+            <li className={`pt-4 flex items-center justify-center gap-6 border-t ${scrolled ? 'border-gray-100' : 'border-white/10'}`}>
+              <a
+                href="https://linkedin.com"
+                aria-label="LinkedIn de Alianza RH"
+                className={`transition-colors duration-150 rounded focus-visible:outline-none focus-visible:ring-2 p-1.5
+                  ${scrolled ? 'text-brand-dark/50 hover:text-brand-blue focus-visible:ring-brand-blue/50' : 'text-white/60 hover:text-white focus-visible:ring-white/50'}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+                </svg>
+              </a>
+              <a
+                href="https://facebook.com"
+                aria-label="Facebook de Alianza RH"
+                className={`transition-colors duration-150 rounded focus-visible:outline-none focus-visible:ring-2 p-1.5
+                  ${scrolled ? 'text-brand-dark/50 hover:text-brand-blue focus-visible:ring-brand-blue/50' : 'text-white/60 hover:text-white focus-visible:ring-white/50'}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+                </svg>
+              </a>
+              <a
+                href="https://instagram.com"
+                aria-label="Instagram de Alianza RH"
+                className={`transition-colors duration-150 rounded focus-visible:outline-none focus-visible:ring-2 p-1.5
+                  ${scrolled ? 'text-brand-dark/50 hover:text-brand-blue focus-visible:ring-brand-blue/50' : 'text-white/60 hover:text-white focus-visible:ring-white/50'}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              </a>
             </li>
           </ul>
         </div>
