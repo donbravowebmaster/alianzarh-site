@@ -24,26 +24,30 @@ export async function POST(request: Request) {
     // 2.5 Inserción en base de datos Supabase (Defensivo / Tolerancia a fallas)
     let savedInDb = false
     try {
-      const { error: dbError } = await supabaseAdmin
-        .from('leads')
-        .insert([
-          {
-            nombre,
-            empresa,
-            cargo: cargo || null,
-            email,
-            telefono: telefono || null,
-            vacantes: vacantes || null,
-            urgencia: urgencia || null,
-            mensaje: mensaje || null,
-          },
-        ])
+      if (supabaseAdmin) {
+        const { error: dbError } = await supabaseAdmin
+          .from('leads')
+          .insert([
+            {
+              nombre,
+              empresa,
+              cargo: cargo || null,
+              email,
+              telefono: telefono || null,
+              vacantes: vacantes || null,
+              urgencia: urgencia || null,
+              mensaje: mensaje || null,
+            },
+          ])
 
-      if (dbError) {
-        throw dbError
+        if (dbError) {
+          throw dbError
+        }
+        savedInDb = true
+        console.log('Lead guardado exitosamente en Supabase.')
+      } else {
+        console.warn('Supabase no está configurado (variables vacías). Saltando inserción en BD.')
       }
-      savedInDb = true
-      console.log('Lead guardado exitosamente en Supabase.')
     } catch (dbErr) {
       console.error('Error al guardar lead en Supabase (Se continuará con el envío del correo de contingencia):', dbErr)
     }
