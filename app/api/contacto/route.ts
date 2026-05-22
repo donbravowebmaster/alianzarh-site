@@ -62,84 +62,306 @@ export async function POST(request: Request) {
       },
     })
 
-    // 4. Plantilla de correo HTML premium
+    // 4. Plantilla de correo HTML premium para notificaciones internas (Admin)
     const emailHtml = `
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
-          <style>
-            body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04); border: 1px solid #e2e8f0; }
-            .header { background-color: #0f172a; padding: 32px; text-align: center; }
-            .content { padding: 40px; }
-            h2 { color: #0f172a; font-size: 22px; margin-top: 0; font-weight: 800; border-bottom: 2px solid #3b82f6; padding-bottom: 12px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            td { padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 15px; }
-            td.label { font-weight: 700; color: #475569; width: 35%; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em; }
-            td.value { color: #0f172a; }
-            .message-box { background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 20px; border-radius: 8px; margin-top: 24px; }
-            .message-title { font-weight: 700; font-size: 13px; text-transform: uppercase; color: #475569; margin-bottom: 8px; }
-            .message-text { font-style: italic; color: #1e293b; line-height: 1.6; font-size: 15px; margin: 0; }
-            .footer { background-color: #f8fafc; padding: 20px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
-          </style>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1 style="color: #ffffff; font-size: 18px; font-weight: 700; margin: 0; letter-spacing: 1px;">ALIANZA RH — NUEVO PROSPECTO</h1>
-            </div>
-            <div class="content">
-              <h2>Detalles del Lead</h2>
-              <table>
-                <tr>
-                  <td class="label">Nombre</td>
-                  <td class="value"><strong>${nombre}</strong></td>
-                </tr>
-                <tr>
-                  <td class="label">Empresa</td>
-                  <td class="value">${empresa}</td>
-                </tr>
-                <tr>
-                  <td class="label">Cargo / Puesto</td>
-                  <td class="value">${cargo || '<em>No especificado</em>'}</td>
-                </tr>
-                <tr>
-                  <td class="label">Email</td>
-                  <td class="value"><a href="mailto:${email}" style="color: #3b82f6; text-decoration: none;">${email}</a></td>
-                </tr>
-                <tr>
-                  <td class="label">Teléfono</td>
-                  <td class="value">${telefono || '<em>No especificado</em>'}</td>
-                </tr>
-                <tr>
-                  <td class="label">Vacantes</td>
-                  <td class="value">${vacantes || '<em>No especificado</em>'}</td>
-                </tr>
-                <tr>
-                  <td class="label">Urgencia</td>
-                  <td class="value" style="color: ${urgencia === 'inmediata' ? '#ef4444' : '#0f172a'}; font-weight: ${urgencia === 'inmediata' ? '700' : 'normal'};">
-                    ${urgencia === 'inmediata' ? 'Inmediata' : urgencia === 'pronto' ? 'Próximas 2-4 semanas' : urgencia === 'planificacion' ? 'Planificación (1-3 meses)' : urgencia || '<em>No especificada</em>'}
-                  </td>
-                </tr>
-              </table>
-              
-              ${
-                mensaje
-                  ? `
-                <div class="message-box">
-                  <div class="message-title">Perfiles solicitados / Mensaje:</div>
-                  <p class="message-text">${mensaje.replace(/\n/g, '<br>')}</p>
-                </div>
-              `
-                  : ''
-              }
-            </div>
-            <div class="footer">
-              Este correo fue enviado automáticamente desde el formulario de contacto de Alianza RH.<br>
-              &copy; ${new Date().getFullYear()} Alianza RH. Todos los derechos reservados.
-            </div>
-          </div>
+        <body style="background-color: #f8fafc; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 40px 20px; -webkit-font-smoothing: antialiased;">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; padding: 40px 20px;">
+            <tr>
+              <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
+                  <!-- Top accent bar -->
+                  <tr>
+                    <td height="6" style="background-color: #357ee3; background-image: linear-gradient(90deg, #357ee3 0%, #c379d8 100%); line-height: 0px; font-size: 0px;">&nbsp;</td>
+                  </tr>
+                  
+                  <!-- Header -->
+                  <tr>
+                    <td style="background-color: #0d1117; padding: 32px 40px; text-align: left;">
+                      <span style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">
+                        alianza<span style="color: #357ee3;">rh</span>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  <!-- Content -->
+                  <tr>
+                    <td style="padding: 40px; background-color: #ffffff;">
+                      <h2 style="color: #0d1117; font-size: 22px; margin-top: 0; font-weight: 800; border-bottom: 2px solid #357ee3; padding-bottom: 12px; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Nuevo Lead Registrado</h2>
+                      <p style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #475569; line-height: 1.6; margin: 0 0 24px 0;">
+                        Se ha recibido un nuevo registro a través del formulario de contacto del sitio web. A continuación se presentan los detalles del prospecto:
+                      </p>
+                      
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; padding: 16px;">
+                        <tr>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; width: 35%; text-transform: uppercase; letter-spacing: 0.05em;">Nombre</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><strong>${nombre}</strong></td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Empresa</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><strong>${empresa}</strong></td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Cargo / Puesto</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${cargo || '<em>No especificado</em>'}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Email</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;"><a href="mailto:${email}" style="color: #357ee3; text-decoration: none; font-weight: 600;">${email}</a></td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Teléfono</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${telefono || '<em>No especificado</em>'}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Vacantes</td>
+                          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #0d1117;">${vacantes || '<em>No especificado</em>'}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 10px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Urgencia</td>
+                          <td style="padding: 10px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: ${urgencia === 'inmediata' ? '700' : 'normal'}; color: ${urgencia === 'inmediata' ? '#ef4444' : '#0d1117'};">
+                            ${urgencia === 'inmediata' ? 'Inmediata' : urgencia === 'pronto' ? 'Próximas 2-4 semanas' : urgencia === 'planificacion' ? 'Planificación (1-3 meses)' : urgencia || '<em>No especificada</em>'}
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      ${mensaje ? `
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border-left: 4px solid #357ee3; padding: 20px; border-radius: 8px; margin-top: 24px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                        <tr>
+                          <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #64748b; padding-bottom: 8px; letter-spacing: 0.05em;">Perfiles solicitados / Mensaje:</td>
+                        </tr>
+                        <tr>
+                          <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-style: italic; color: #1e293b; line-height: 1.6; padding: 0;">${mensaje.replace(/\n/g, '<br>')}</td>
+                        </tr>
+                      </table>
+                      ` : ''}
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #0d1117; padding: 24px; text-align: center; border-top: 1px solid #1e293b;">
+                      <p style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #94a3b8; margin: 0; line-height: 1.5;">
+                        Este correo fue enviado automáticamente desde el formulario de contacto de Alianza RH.<br>
+                        &copy; ${new Date().getFullYear()} Alianza RH. Todos los derechos reservados.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
+    `
+
+    // 4.5. Plantilla de correo HTML ultra-premium para auto-respuesta al CLIENTE
+    const clientEmailHtml = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        </head>
+        <body style="background-color: #f8fafc; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; padding: 40px 20px;">
+            <tr>
+              <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.03);">
+                  <!-- Top accent bar -->
+                  <tr>
+                    <td height="6" style="background-color: #357ee3; background-image: linear-gradient(90deg, #357ee3 0%, #c379d8 100%); line-height: 0px; font-size: 0px;">&nbsp;</td>
+                  </tr>
+                  
+                  <!-- Header -->
+                  <tr>
+                    <td style="background-color: #0d1117; padding: 32px 40px; text-align: left;">
+                      <span style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">
+                        alianza<span style="color: #357ee3;">rh</span>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  <!-- Main Content -->
+                  <tr>
+                    <td style="padding: 40px; background-color: #ffffff;">
+                      <h2 style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0d1117; font-size: 24px; font-weight: 800; margin: 0 0 16px 0; line-height: 1.25;">¡Hola, ${nombre}! 👋</h2>
+                      <p style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #475569; line-height: 1.6; margin: 0 0 32px 0;">
+                        Queremos agradecerte por tu interés en Alianza RH. Confirmamos que hemos recibido tu solicitud de información de forma exitosa. Nos entusiasma mucho la posibilidad de colaborar con <strong>${empresa}</strong> para optimizar sus procesos de selección de personal.
+                      </p>
+                      
+                      <!-- Request Summary Card -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin-bottom: 32px;">
+                        <tr>
+                          <td style="padding: 24px;">
+                            <div style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #357ee3; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">Resumen de tu solicitud</div>
+                            
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b; width: 40%;">Empresa</td>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 700;">${empresa}</td>
+                              </tr>
+                              ${cargo ? `
+                              <tr>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Tu Cargo</td>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">${cargo}</td>
+                              </tr>
+                              ` : ''}
+                              ${telefono ? `
+                              <tr>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Teléfono</td>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">${telefono}</td>
+                              </tr>
+                              ` : ''}
+                              ${vacantes ? `
+                              <tr>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Vacantes a Cubrir</td>
+                                <td style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">
+                                  ${vacantes === '30+' ? 'Más de 30 posiciones' : vacantes + ' posiciones'}
+                                </td>
+                              </tr>
+                              ` : ''}
+                              ${urgencia ? `
+                              <tr>
+                                <td style="padding: 8px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 600; color: #64748b;">Urgencia</td>
+                                <td style="padding: 8px 0; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #0d1117; font-weight: 500;">
+                                  ${urgencia === 'inmediata' ? 'Inmediata (esta semana)' : urgencia === 'pronto' ? 'Próximas 2-4 semanas' : urgencia === 'planificacion' ? 'Planificación (1-3 meses)' : urgencia}
+                                </td>
+                              </tr>
+                              ` : ''}
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Pillars of Service (Bento Concept) -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; margin-bottom: 32px;">
+                        <tr>
+                          <td>
+                            <div style="text-align: center; margin-bottom: 28px;">
+                              <span style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #eaf2fc; color: #357ee3; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 6px 16px; border-radius: 100px; display: inline-block;">
+                                NUESTRO VALOR AGREGADO
+                              </span>
+                              <h3 style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0d1117; font-size: 18px; font-weight: 800; margin: 12px 0 0 0;">¿Por qué elegir Alianza RH?</h3>
+                            </div>
+                            
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                              <!-- Pillar 1 -->
+                              <tr>
+                                <td valign="top" style="padding-bottom: 24px; width: 40px;">
+                                  <table border="0" cellpadding="0" cellspacing="0" style="background-color: #eaf2fc; border-radius: 50%; width: 36px; height: 36px; text-align: center;">
+                                    <tr>
+                                      <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 36px;">⚡</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td valign="top" style="padding-left: 16px; padding-bottom: 24px; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                  <strong style="color: #0d1117; font-size: 15px; font-weight: 700; display: block; margin: 0 0 4px 0;">Contratación 78% más rápida</strong>
+                                  <span style="font-size: 13px; color: #475569; display: block; line-height: 1.5;">Nuestra tecnología de pauta digital avanzada y automatización atrae talento calificado en tiempo récord.</span>
+                                </td>
+                              </tr>
+                              
+                              <!-- Pillar 2 -->
+                              <tr>
+                                <td valign="top" style="padding-bottom: 24px; width: 40px;">
+                                  <table border="0" cellpadding="0" cellspacing="0" style="background-color: #f9effb; border-radius: 50%; width: 36px; height: 36px; text-align: center;">
+                                    <tr>
+                                      <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 36px;">🎯</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td valign="top" style="padding-left: 16px; padding-bottom: 24px; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                  <strong style="color: #0d1117; font-size: 15px; font-weight: 700; display: block; margin: 0 0 4px 0;">Filtros y Evaluación Avanzada</strong>
+                                  <span style="font-size: 13px; color: #475569; display: block; line-height: 1.5;">Pre-evaluamos minuciosamente a cada candidato antes de presentártelo, asegurando la máxima afinidad cultural y técnica.</span>
+                                </td>
+                              </tr>
+                              
+                              <!-- Pillar 3 -->
+                              <tr>
+                                <td valign="top" style="width: 40px;">
+                                  <table border="0" cellpadding="0" cellspacing="0" style="background-color: #eaf2fc; border-radius: 50%; width: 36px; height: 36px; text-align: center;">
+                                    <tr>
+                                      <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 36px;">⚙️</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td valign="top" style="padding-left: 16px; font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                  <strong style="color: #0d1117; font-size: 15px; font-weight: 700; display: block; margin: 0 0 4px 0;">Reclutamiento sin Fricción</strong>
+                                  <span style="font-size: 13px; color: #475569; display: block; line-height: 1.5;">Eliminamos la carga administrativa y las tareas manuales para que tu equipo se concentre solo en tomar la decisión final.</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Next Steps Section -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-top: 1px solid #e2e8f0; padding-top: 32px; margin-bottom: 32px;">
+                        <tr>
+                          <td>
+                            <h3 style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0d1117; font-size: 16px; font-weight: 800; margin: 0 0 12px 0;">¿Cuáles son los siguientes pasos?</h3>
+                            <p style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; color: #475569; line-height: 1.6; margin: 0 0 24px 0;">
+                              Un consultor de nuestro equipo de atracción de talento analizará a fondo tus requerimientos específicos. Nos pondremos en contacto contigo en un plazo máximo de <strong>24 horas hábiles</strong> para coordinar una breve sesión de diagnóstico y demo personalizada.
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Button CTA -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                          <td align="center" style="padding: 8px 0 24px 0;">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                              <tr>
+                                <td align="center" style="background-color: #357ee3; background-image: linear-gradient(135deg, #357ee3 0%, #c379d8 100%); border-radius: 12px;">
+                                  <a href="https://alianzarh.com" target="_blank" style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 700; color: #ffffff; text-decoration: none; padding: 16px 36px; display: inline-block; letter-spacing: 0.5px;">Conocer más de Alianza RH</a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <div style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #475569; margin: 32px 0 0 0; line-height: 1.5;">
+                        Atentamente,<br />
+                        <strong style="color: #0d1117;">El equipo de Alianza RH</strong><br />
+                        <span style="font-size: 13px; color: #64748b;">Especialistas en Atracción de Talento y Tecnología RH</span>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #0d1117; padding: 32px 40px; text-align: center; border-top: 1px solid #1e293b;">
+                      <div style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; margin: 0 0 12px 0;">ALIANZA RH</div>
+                      <p style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.5;">Monterrey, Nuevo León, México | Cobertura en toda América Latina</p>
+                      <p style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #94a3b8; margin: 0 0 16px 0; line-height: 1.5;">Teléfono: +52 81 2332 1719 | Email: <a href="mailto:contacto@alianzarh.com" style="color: #357ee3; text-decoration: none;">contacto@alianzarh.com</a></p>
+                      
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-top: 1px solid #1e293b; padding-top: 16px;">
+                        <tr>
+                          <td style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; color: #475569; line-height: 1.5; text-align: center;">
+                            Este es un correo de confirmación automática enviado tras tu registro en el sitio web de Alianza RH.<br />
+                            Para conocer la forma en que salvaguardamos tu información personal, consulta nuestro <a href="https://alianzarh.com/privacidad" target="_blank" style="color: #357ee3; text-decoration: none;">Aviso de Privacidad</a>.
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
       </html>
     `
@@ -147,8 +369,8 @@ export async function POST(request: Request) {
     const senderEmail = process.env.SMTP_USER || 'contacto@alianzarh.com'
     const recipientEmail = process.env.NOTIFICATION_RECIPIENT || 'contacto@alianzarh.com'
 
-    // 5. Configurar opciones del correo
-    const mailOptions = {
+    // 5. Configurar opciones del correo de notificación interna (Admin)
+    const adminMailOptions = {
       from: `"Alianza RH Leads" <${senderEmail}>`,
       to: recipientEmail,
       replyTo: email, // Al hacer clic en "Responder" responderá directamente al prospecto
@@ -156,8 +378,19 @@ export async function POST(request: Request) {
       html: emailHtml,
     }
 
-    // 6. Enviar
-    await transporter.sendMail(mailOptions)
+    // 5.5. Configurar opciones del correo de auto-respuesta (Cliente)
+    const clientMailOptions = {
+      from: `"Alianza RH" <${senderEmail}>`,
+      to: email,
+      subject: `¡Hemos recibido tu solicitud de demo! — Alianza RH`,
+      html: clientEmailHtml,
+    }
+
+    // 6. Enviar notificaciones en paralelo para optimizar la velocidad del servidor
+    await Promise.all([
+      transporter.sendMail(adminMailOptions),
+      transporter.sendMail(clientMailOptions),
+    ])
 
     return NextResponse.json({ success: true, savedInDb })
   } catch (error: any) {
@@ -168,3 +401,4 @@ export async function POST(request: Request) {
     )
   }
 }
+
