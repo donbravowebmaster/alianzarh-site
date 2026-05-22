@@ -9,6 +9,7 @@ type FormState = {
   telefono: string
   vacantes: string
   mensaje: string
+  honeypot: string
 }
 
 const initialForm: FormState = {
@@ -18,16 +19,17 @@ const initialForm: FormState = {
   telefono: '',
   vacantes: '',
   mensaje: '',
+  honeypot: '',
 }
 
 const inputClass = [
-  'w-full bg-white/8 border border-white/15',
-  'text-white placeholder:text-white/35',
+  'w-full bg-[#161b22] border border-white/10',
+  'text-white placeholder:text-white/30',
   'rounded-xl px-4 py-3.5 text-sm',
   'transition-[border-color,background-color,box-shadow] duration-150 ease-out',
   'focus-visible:outline-none focus-visible:ring-2',
   'focus-visible:ring-brand-blue focus-visible:border-brand-blue',
-  'focus-visible:bg-white/12',
+  'focus-visible:bg-[#1d232e] focus-visible:border-brand-blue/80',
 ].join(' ')
 
 const labelClass = 'block text-white/60 text-xs font-medium mb-1.5 uppercase tracking-wide'
@@ -56,6 +58,7 @@ export function ContactCTA() {
   const [form, setForm] = useState<FormState>(initialForm)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -63,10 +66,38 @@ export function ContactCTA() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    
+    if (!form.nombre.trim() || !form.empresa.trim() || !form.email.trim()) {
+      setError('Por favor, completa todos los campos requeridos (*).')
+      return
+    }
+
     setIsSubmitting(true)
-    await new Promise<void>((resolve) => setTimeout(resolve, 1200))
-    setIsSubmitting(false)
-    setSubmitted(true)
+    setError(null)
+
+    try {
+      const response = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setSubmitted(true)
+        setForm(initialForm)
+      } else {
+        setError(data.error || 'Ocurrió un error al enviar el formulario. Intenta de nuevo.')
+      }
+    } catch (err) {
+      console.error('Error al enviar formulario:', err)
+      setError('Hubo un problema de conexión. Por favor, verifica tu internet e intenta de nuevo.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -124,7 +155,7 @@ export function ContactCTA() {
           </div>
 
           {/* ── Formulario ─────────────────────────────────────── */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8">
+          <div className="bg-[#111622] border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl">
             {/* aria-live="polite": anuncia cambio de estado al screen reader */}
             <div aria-live="polite" aria-atomic="true">
               {submitted ? (
@@ -163,6 +194,20 @@ export function ContactCTA() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate>
+                  {/* Campo oculto Honeypot contra spam */}
+                  <div className="absolute opacity-0 -z-50 w-0 h-0 overflow-hidden" aria-hidden="true">
+                    <label htmlFor="cta-honeypot">Dejar vacío si eres humano</label>
+                    <input
+                      id="cta-honeypot"
+                      name="honeypot"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={form.honeypot}
+                      onChange={handleChange}
+                    />
+                  </div>
+
                   <h3 className="font-display text-xl font-bold text-white mb-6">
                     Cotizar una Vacante
                   </h3>
@@ -276,6 +321,15 @@ export function ContactCTA() {
                       className={`${inputClass} resize-none`}
                     />
                   </div>
+
+                  {error && (
+                    <div className="mb-6 p-4 bg-red-950/40 border border-red-500/30 rounded-xl text-red-200 text-sm font-medium flex items-center gap-2">
+                      <svg className="w-5 h-5 shrink-0 text-red-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span>{error}</span>
+                    </div>
+                  )}
 
                   <button
                     type="submit"

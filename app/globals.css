@@ -144,3 +144,38 @@
     transform: scale(0.9) translate(-20px, 20px);
   }
 }
+
+/* ─── Autofill Defensive Styling ──────────────────────────────── */
+/* Dark form inputs (ContactCTA.tsx) autofill overrides */
+.bg-brand-dark input:-webkit-autofill,
+.bg-brand-dark input:-webkit-autofill:hover,
+.bg-brand-dark input:-webkit-autofill:focus,
+.bg-brand-dark input:-webkit-autofill:active,
+.bg-brand-dark select:-webkit-autofill,
+.bg-brand-dark select:-webkit-autofill:hover,
+.bg-brand-dark select:-webkit-autofill:focus,
+.bg-brand-dark select:-webkit-autofill:active,
+.bg-[#111622] input:-webkit-autofill,
+.bg-[#111622] input:-webkit-autofill:hover,
+.bg-[#111622] input:-webkit-autofill:focus,
+.bg-[#111622] input:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 0px 9999px #161b22 !important;
+}
+
+/* Light form inputs (ContactForm.tsx) autofill overrides */
+.bg-white input:-webkit-autofill,
+.bg-white input:-webkit-autofill:hover,
+.bg-white input:-webkit-autofill:focus,
+.bg-white input:-webkit-autofill:active,
+.bg-white select:-webkit-autofill,
+.bg-white select:-webkit-autofill:hover,
+.bg-white select:-webkit-autofill:focus,
+.bg-white select:-webkit-autofill:active {
+  -webkit-text-fill-color: #111827 !important;
+  caret-color: #111827 !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 0px 9999px #ffffff !important;
+}
