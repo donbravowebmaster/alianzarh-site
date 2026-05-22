@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Términos de Servicio',
+  title: 'Términos y Condiciones de Uso',
   description:
-    'Términos y condiciones de uso del sitio web de Alianza RH y la prestación de servicios de reclutamiento.',
+    'Términos y Condiciones de Uso del sitio web y los canales digitales oficiales de Alianza RH, aplicables a empresas y representantes legales.',
 }
 
 export default function TerminosPage() {
@@ -23,56 +23,97 @@ export default function TerminosPage() {
         />
         <div className="container-max relative z-10 text-center max-w-3xl mx-auto">
           <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
-            Términos de Servicio
+            Términos y Condiciones de Uso
           </h1>
           <p className="text-white/60 text-base sm:text-lg">
+            Regulaciones comerciales aplicables en los Estados Unidos Mexicanos
+          </p>
+          <p className="text-white/40 text-xs sm:text-sm mt-2">
             Última actualización: 21 de mayo de 2026
           </p>
         </div>
       </section>
 
-      {/* ── SECCIÓN 2: CONTENIDO EDITORIAL ── */}
+      {/* ── SECCIÓN 2: CONTENIDO LEGAL ── */}
       <section className="bg-brand-surface py-16 sm:py-24 relative">
         <div className="container-max max-w-3xl mx-auto px-4">
           <div className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-xl shadow-slate-100/50">
             <div className="prose prose-slate max-w-none text-brand-dark text-sm sm:text-base leading-relaxed space-y-6">
+              
               <p>
-                Bienvenido al sitio web de <strong>Alianza RH</strong>. Al acceder y utilizar este sitio, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso. Si no está de acuerdo con alguna de estas condiciones, le pedimos amablemente que no utilice nuestro sitio.
+                Bienvenido al portal web oficial de <strong>Alianza RH</strong>. Los presentes Términos y Condiciones de Uso (en lo sucesivo los &quot;Términos&quot;) regulan el acceso, navegación y uso de nuestro portal web, así como la interacción y recopilación de solicitudes a través de nuestros formularios digitales.
+              </p>
+              <p>
+                Al acceder, navegar o utilizar este sitio web, usted declara bajo protesta de decir verdad que actúa en nombre y representación de una persona moral legalmente constituida o que es una persona física con capacidad legal para contratar bajo la legislación mexicana, y que acepta de manera expresa y sin reserva alguna los presentes Términos. Si usted no está de acuerdo con el contenido de este documento, deberá abstenerse inmediatamente de navegar e interactuar con este portal.
               </p>
 
               <h2 className="font-display text-xl font-bold text-brand-dark pt-4 border-t border-gray-100">
-                1. Uso Autorizado del Sitio Web
+                1. Propósito e Información del Portal
               </h2>
               <p className="text-brand-gray text-sm">
-                Este sitio web tiene como finalidad principal proporcionar información general sobre los servicios de reclutamiento especializado, atracción de talento y headhunting corporativo de Alianza RH, así como permitir a clientes y candidatos agendar sesiones de demostración o diagnóstico. Queda estrictamente prohibido el uso de este sitio para fines fraudulentos, envío de correo basura (spam) o actividades que perjudiquen su funcionamiento.
+                La finalidad principal de este sitio web es netamente informativa y comercial en el ámbito mercantil de empresa a empresa (B2B). Proporciona información sobre soluciones de atracción de talento, reclutamiento especializado por pauta digital, headhunting corporativo y tecnologías de automatización aplicables al sector de recursos humanos.
+              </p>
+              <p className="text-brand-gray text-sm italic">
+                * Ninguna información contenida en esta página web constituye una oferta vinculante de prestación de servicios por parte de Alianza RH. La contratación de cualquiera de nuestras soluciones comerciales se perfeccionará exclusivamente mediante la negociación y firma por escrito del respectivo Contrato de Prestación de Servicios entre las partes autorizadas de cada empresa.
               </p>
 
               <h2 className="font-display text-xl font-bold text-brand-dark pt-4 border-t border-gray-100">
-                2. Propiedad Intelectual
+                2. Propiedad Intelectual e Industrial
               </h2>
               <p className="text-brand-gray text-sm">
-                Todo el contenido disponible en este sitio, incluyendo pero no limitado a textos, logotipos, diseños, códigos fuente, gráficos e interfaces visuales, es propiedad exclusiva de Alianza RH o de sus respectivos licenciantes, y está protegido por las leyes de propiedad intelectual en México e internacionales. Su reproducción, distribución o modificación sin autorización escrita está estrictamente prohibida.
+                Todo el contenido disponible en este portal, incluyendo de manera enunciativa más no limitativa, textos, códigos fuente de programación, interfaces gráficas de usuario (GUI), esquemas, logotipos, slogans comerciales, animaciones, diagramas (tales como el simulador del pipeline de selección), mapas e imágenes, son propiedad exclusiva de <strong>Alianza RH</strong> o cuenta con las licencias correspondientes.
+              </p>
+              <p className="text-brand-gray text-sm">
+                Todos los derechos de propiedad intelectual se encuentran protegidos por la Ley Federal del Derecho de Autor, la Ley Federal de Protección a la Propiedad Industrial y los tratados internacionales de los que México es parte. Queda estrictamente prohibida la reproducción parcial o total, distribución, modificación, retransmisión o ingeniería inversa del portal sin el consentimiento expreso y por escrito del representante legal de Alianza RH.
               </p>
 
               <h2 className="font-display text-xl font-bold text-brand-dark pt-4 border-t border-gray-100">
-                3. Limitación de Responsabilidad
+                3. Uso Permitido y Limitaciones de Conducta
               </h2>
               <p className="text-brand-gray text-sm">
-                Alianza RH realiza esfuerzos constantes para garantizar que la información en este sitio sea precisa y actualizada. Sin embargo, no garantizamos de forma implícita o explícita la total exactitud o disponibilidad del sitio en todo momento. La contratación formal de nuestros servicios de atracción de talento se rige únicamente por los contratos y propuestas firmados individualmente por cada cliente corporativo.
+                El usuario se compromete a hacer uso de este sitio de conformidad con las leyes vigentes y las buenas costumbres comerciales. El usuario tiene prohibido de manera estricta:
+              </p>
+              <ul className="list-disc pl-5 text-brand-gray text-sm space-y-2" role="list">
+                <li>Utilizar el sitio para transmitir virus, troyanos, ransomware u otras amenazas informáticas destructivas.</li>
+                <li>Utilizar datos falsos, inexactos o pertenecientes a terceros sin su consentimiento expreso en los formularios de contacto del sitio web.</li>
+                <li>Realizar raspado de datos (web scraping) o extraer de forma automatizada información de candidatos, vacantes o esquemas gráficos expuestos en el sitio.</li>
+                <li>Hacer uso de la marca &quot;Alianza RH&quot; o sus logotipos para simular la prestación de servicios en nombre de la empresa.</li>
+              </ul>
+
+              <h2 className="font-display text-xl font-bold text-brand-dark pt-4 border-t border-gray-100">
+                4. Limitación de Responsabilidad
+              </h2>
+              <p className="text-brand-gray text-sm">
+                Alianza RH implementa los más altos estándares y mejores prácticas de ciberseguridad en el hospedaje y desarrollo de su portal (utilizando redes CDN globales y compresión optimizada). Sin embargo, bajo ninguna circunstancia será responsable por:
+              </p>
+              <ul className="list-disc pl-5 text-brand-gray text-sm space-y-2" role="list">
+                <li>Interrupciones técnicas temporales de la plataforma ajenas a nuestro control.</li>
+                <li>Daños directos, indirectos o incidentales en el equipo del usuario derivados de la navegación o descargas de material en este sitio.</li>
+                <li>La falta de actualización o pequeñas imprecisiones en los datos informativos expuestos sobre cobertura de vacantes, promedios de garantía de reposición o tiempos promedio de cobertura, los cuales son promedios generales y pueden variar por sector industrial.</li>
+              </ul>
+
+              <h2 className="font-display text-xl font-bold text-brand-dark pt-4 border-t border-gray-100">
+                5. Privacidad y Datos Personales
+              </h2>
+              <p className="text-brand-gray text-sm">
+                El tratamiento y resguardo de cualquier dato personal recopilado a través de los formularios de este sitio se rigen exclusivamente bajo los términos expresados en nuestro <Link href="/privacidad" className="text-brand-blue font-semibold hover:underline">Aviso de Privacidad Integral</Link>, el cual está redactado en cumplimiento con la LFPDPPP mexicana y puede consultarse en cualquier momento.
               </p>
 
               <h2 className="font-display text-xl font-bold text-brand-dark pt-4 border-t border-gray-100">
-                4. Enlaces a Terceros
+                6. Modificaciones de los Términos
               </h2>
               <p className="text-brand-gray text-sm">
-                Este sitio puede contener enlaces a redes sociales y plataformas de terceros (como LinkedIn o Vercel). Estos enlaces se proporcionan únicamente para su conveniencia y Alianza RH no tiene control ni asume responsabilidad sobre las políticas, términos de uso o contenidos de dichos sitios externos.
+                Alianza RH se reserva el derecho exclusivo de realizar cambios, adiciones o adaptaciones parciales o totales a los presentes Términos de Servicio en cualquier momento y sin previo aviso, con el fin de reflejar cambios en la legislación comercial o en su modelo de negocio. La continuación en el uso del portal web posterior a cualquier modificación constituirá su aceptación incondicional de los nuevos términos.
               </p>
 
               <h2 className="font-display text-xl font-bold text-brand-dark pt-4 border-t border-gray-100">
-                5. Modificaciones a los Términos
+                7. Legislación y Jurisdicción Aplicables
               </h2>
               <p className="text-brand-gray text-sm">
-                Nos reservamos el derecho de modificar o actualizar estos Términos de Servicio en cualquier momento y sin previo aviso. Le sugerimos revisar periódicamente esta sección para estar al tanto de cualquier cambio.
+                Para la interpretación, cumplimiento y resolución de cualquier controversia judicial o administrativa derivada del acceso o uso de este portal web, las partes acuerdan expresamente someterse a la aplicación de las leyes federales de los Estados Unidos Mexicanos y de las leyes del Estado de Nuevo León.
+              </p>
+              <p className="text-brand-gray text-sm">
+                Asimismo, las partes convienen de manera irrevocable someterse a la jurisdicción exclusiva de los Tribunales Judiciales competentes ubicados en la ciudad de <strong>Monterrey, Nuevo León, México</strong>, renunciando de manera expresa a cualquier otra jurisdicción o fuero que por razón de sus domicilios presentes o futuros pudiera corresponderles.
               </p>
 
               <div className="pt-8 border-t border-gray-100 text-center">

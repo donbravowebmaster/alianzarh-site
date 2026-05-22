@@ -8,15 +8,8 @@ const navLinks = [
   { href: '/contacto', label: 'Contacto' },
 ]
 
-const solutionLinks = [
-  { href: '/servicios#automatizacion', label: 'Filtro de Candidatos' },
-  { href: '/servicios#pauta', label: 'Publicidad de Vacantes' },
-  { href: '/servicios#headhunting', label: 'Headhunting de Directivos' },
-  { href: '/servicios#filtros', label: 'Evaluación y Pruebas' },
-]
-
 const legalLinks = [
-  { href: '/privacidad', label: 'Política de Privacidad' },
+  { href: '/privacidad', label: 'Aviso de Privacidad' },
   { href: '/terminos', label: 'Términos de Servicio' },
 ]
 
@@ -103,13 +96,13 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* ── Soluciones ── */}
+          {/* ── Legales ── */}
           <div>
             <h3 className="text-white font-semibold text-sm uppercase tracking-widest mb-5">
-              Soluciones
+              Legales
             </h3>
             <ul className="flex flex-col gap-3" role="list">
-              {solutionLinks.map((link) => (
+              {legalLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -154,22 +147,10 @@ export function Footer() {
         </div>
 
         {/* ── Barra inferior ── */}
-        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-white/10 pt-8 text-center sm:text-left">
           <p className="text-white/30 text-xs">
             &copy; {new Date().getFullYear()} Alianza RH &middot; Monterrey, N.L. Todos los derechos reservados.
           </p>
-          <ul className="flex items-center gap-6" role="list">
-            {legalLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="text-white/30 hover:text-white/60 text-xs transition-colors duration-150"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </footer>
