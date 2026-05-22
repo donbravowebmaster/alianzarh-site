@@ -17,7 +17,7 @@ const services = [
   {
     id: 'automatizacion',
     tag: 'Eficiencia',
-    title: 'Filtro Inteligente y Seguimiento de Candidatos',
+    title: 'Filtro Inteligente y Selección de Candidatos',
     description:
       'Diseñamos un sistema que recibe, filtra y organiza a tus candidatos automáticamente. Tu equipo de recursos humanos solo dedicará tiempo a entrevistar a los mejores perfiles, eliminando la revisión manual de cientos de currículums.',
     points: [

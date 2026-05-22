@@ -208,15 +208,15 @@ export function ValuesBentoGrid() {
         </div>
       </article>
 
-      {/* Tarjeta 2 (md:col-span-1) — Transparencia total con Mock de seguimiento */}
+      {/* Tarjeta 2 (md:col-span-1) — Transparencia total con Mock de Reporte de Avances */}
       <article className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-8 flex flex-col justify-between hover:border-brand-blue/20 transition-all duration-300">
         <div>
           <div className="w-8 h-0.5 bg-brand-blue mb-5" aria-hidden="true" />
           <h3 className="font-display text-xl font-bold text-brand-dark mb-3">
-            Cuentas claras y procesos a la vista.
+            Informes claros y comunicación directa.
           </h3>
           <p className="text-brand-gray text-xs sm:text-sm leading-relaxed">
-            Eliminamos las llamadas constantes y las cajas negras. Te damos visibilidad total del avance de tus vacantes mediante informes directos, sin excusas ni retrasos.
+            Eliminamos la incertidumbre y las cajas negras. Te mantenemos al tanto del estado de tus búsquedas mediante reportes periódicos y contacto directo con tu consultor asignado.
           </p>
         </div>
 
@@ -224,20 +224,27 @@ export function ValuesBentoGrid() {
         <div className="mt-5 bg-brand-dark text-white rounded-xl p-4 border border-white/5 space-y-3 font-sans">
           <div className="flex justify-between items-center border-b border-white/10 pb-2">
             <span className="text-[9px] font-extrabold text-white/50 uppercase tracking-wider">
-              Estatus en Vivo
+              Reporte de Avances
             </span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[9px] font-bold text-brand-blue uppercase">Frecuencia Semanal</span>
           </div>
           <div className="space-y-2">
             <div className="text-[11px]">
-              <p className="font-bold">Gerente de Operaciones</p>
-              <div className="w-full h-1 bg-white/10 rounded-full mt-1.5 overflow-hidden">
-                <div className="h-full bg-brand-blue w-4/5" />
+              <p className="font-bold text-white/90">Gerente de Operaciones</p>
+              <div className="flex items-center gap-1.5 text-[10px] text-white/60 mt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0" />
+                <span>Estatus: Terna Finalista</span>
               </div>
             </div>
-            <div className="flex items-center justify-between text-[9px] text-white/60">
-              <span>Etapa actual: Filtro Técnico</span>
-              <span className="font-bold text-brand-purple">4 Seleccionados</span>
+            <div className="grid grid-cols-2 gap-2 text-[9px] pt-1.5 border-t border-white/5 text-white/60">
+              <div>
+                <span className="block text-white/40">Evaluados:</span>
+                <span className="font-bold text-white">12 perfiles</span>
+              </div>
+              <div>
+                <span className="block text-white/40">Finalistas:</span>
+                <span className="font-bold text-brand-purple">3 candidatos</span>
+              </div>
             </div>
           </div>
         </div>

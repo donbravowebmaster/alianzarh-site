@@ -8,7 +8,7 @@ const metrics = [
 const testimonials = [
   {
     quote:
-      'En menos de 3 semanas cubrieron 5 vacantes críticas de ingeniería que llevábamos 4 meses buscando. El seguimiento digital en tiempo real nos dio total claridad en todo el proceso.',
+      'En menos de 3 semanas cubrieron 5 vacantes críticas de ingeniería que llevábamos 4 meses buscando. Su comunicación constante y reportes claros nos dieron total tranquilidad en todo el proceso.',
     author: 'Directora de RH',
     company: 'Empresa de Tecnología · 200 empleados',
     initials: 'MR',
