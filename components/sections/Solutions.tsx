@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const features = [
   {
     icon: (
@@ -11,6 +13,7 @@ const features = [
       'Flujos de selección configurables que clasifican, filtran y avanzan candidatos automáticamente. Tu equipo interviene solo donde agrega valor.',
     tag: 'Core',
     tagColor: 'bg-brand-blue/10 text-brand-blue',
+    href: '/servicios#automatizacion',
   },
   {
     icon: (
@@ -23,6 +26,7 @@ const features = [
       'Encontramos al candidato ideal directamente en sus redes sociales y plataformas profesionales. Llegamos a personas con el perfil exacto, incluso si no buscan empleo activamente.',
     tag: 'Diferenciador',
     tagColor: 'bg-brand-purple/10 text-brand-purple',
+    href: '/servicios#pauta',
   },
   {
     icon: (
@@ -35,6 +39,7 @@ const features = [
       'Evaluaciones automáticas que identifican habilidades, experiencia verificada y alineación cultural antes de la primera entrevista presencial.',
     tag: 'Core',
     tagColor: 'bg-brand-blue/10 text-brand-blue',
+    href: '/servicios#filtros',
   },
 ]
 
@@ -56,8 +61,9 @@ export function Solutions() {
 
         <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature) => (
-            <article
+            <Link
               key={feature.title}
+              href={feature.href}
               className="bg-white rounded-2xl p-8 lg:p-10 border border-gray-100 hover:border-brand-blue/20 hover:shadow-lg transition-[border-color,box-shadow,transform] duration-300 ease-out hover:-translate-y-1.5 group flex flex-col justify-between min-h-[380px] h-full"
             >
               <div>
@@ -83,7 +89,7 @@ export function Solutions() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
