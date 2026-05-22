@@ -266,6 +266,15 @@ export async function POST(request: Request) {
                               </tr>
                               ` : ''}
                             </table>
+
+                            ${safeMensaje ? `
+                            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                              <div style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; color: #357ee3; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Mensaje / Perfiles Solicitados</div>
+                              <div style="font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-style: italic; color: #475569; line-height: 1.5; margin: 0; padding: 0;">
+                                "${safeMensaje}"
+                              </div>
+                            </div>
+                            ` : ''}
                           </td>
                         </tr>
                       </table>
