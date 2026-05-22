@@ -59,7 +59,7 @@ export function LeadershipSelector() {
           <button
             key={tab.role}
             onClick={() => setActiveTab(idx)}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
+            className={`px-4 py-2.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 touch-manipulation ${
               activeTab === idx
                 ? 'bg-brand-blue text-white shadow-md shadow-brand-blue/25 scale-[1.02]'
                 : 'bg-brand-surface text-brand-dark/70 hover:bg-gray-100'

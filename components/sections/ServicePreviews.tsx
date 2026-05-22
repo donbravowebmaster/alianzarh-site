@@ -128,7 +128,7 @@ export function PipelineAutomationPreview() {
                 <button
                   type="button"
                   onClick={() => advanceCandidate(idx)}
-                  className="bg-white/10 hover:bg-white/20 border border-white/10 p-1.5 rounded-lg text-white/80 hover:text-white transition-colors duration-150"
+                  className="bg-white/10 hover:bg-white/20 border border-white/10 p-3 sm:p-2 rounded-xl text-white/80 hover:text-white transition-all duration-150 active:scale-95 touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center"
                   title="Avanzar etapa manualmente"
                   aria-label={`Avanzar a ${candidate.name}`}
                 >
@@ -275,6 +275,14 @@ export function HeadhuntingPreview() {
 
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
 
+  const handleBarInteraction = (idx: number) => {
+    if (hoveredIdx === idx) {
+      setHoveredIdx(null)
+    } else {
+      setHoveredIdx(idx)
+    }
+  }
+
   return (
     <div className="bg-brand-dark/95 border border-white/10 rounded-2xl p-6 sm:p-8 w-full max-w-lg mx-auto shadow-2xl text-white font-sans relative overflow-hidden">
       {/* Sello de Garantía con Efecto de Resplandor */}
@@ -299,9 +307,10 @@ export function HeadhuntingPreview() {
         {skills.map((skill, idx) => (
           <div
             key={skill.name}
-            className="cursor-pointer group"
+            className="cursor-pointer group select-none touch-manipulation"
             onMouseEnter={() => setHoveredIdx(idx)}
             onMouseLeave={() => setHoveredIdx(null)}
+            onClick={() => handleBarInteraction(idx)}
           >
             <div className="flex justify-between text-xs font-semibold mb-1">
               <span className="text-white/80 group-hover:text-white transition-colors duration-150">{skill.name}</span>
@@ -326,7 +335,7 @@ export function HeadhuntingPreview() {
           </div>
         ) : (
           <p className="text-xs text-white/40 italic text-center w-full">
-            *Pasa el cursor sobre cada habilidad para ver el comentario de nuestro consultor.
+            *Pasa el cursor o pulsa sobre cada habilidad para ver el comentario de nuestro consultor.
           </p>
         )}
       </div>

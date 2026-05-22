@@ -36,42 +36,6 @@ const features = [
     tag: 'Core',
     tagColor: 'bg-brand-blue/10 text-brand-blue',
   },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
-      </svg>
-    ),
-    title: 'Panel de seguimiento en tiempo real',
-    description:
-      'Visibilidad completa del avance del proceso. Cada etapa, cada candidato y cada acción registrada, sin necesidad de llamadas constantes de seguimiento.',
-    tag: 'Transparencia',
-    tagColor: 'bg-green-100 text-green-700',
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-      </svg>
-    ),
-    title: 'Base de candidatos precalificados',
-    description:
-      'Miles de perfiles activos y verificados listos para ser activados en horas. Reducimos radicalmente el tiempo de respuesta en posiciones urgentes.',
-    tag: 'Velocidad',
-    tagColor: 'bg-amber-100 text-amber-700',
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-      </svg>
-    ),
-    title: 'Reportes y analítica de resultados',
-    description:
-      'Métricas de tiempo de cobertura, costo por contratación y calidad del talento. Datos que respaldan cada decisión y justifican la inversión.',
-    tag: 'Analítica',
-    tagColor: 'bg-brand-blue/10 text-brand-blue',
-  },
 ]
 
 export function Solutions() {
@@ -90,26 +54,35 @@ export function Solutions() {
           </p>
         </header>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature) => (
             <article
               key={feature.title}
-              className="bg-white rounded-2xl p-7 border border-gray-100 hover:border-brand-blue/20 hover:shadow-lg transition-[border-color,box-shadow] duration-300 ease-out group"
+              className="bg-white rounded-2xl p-8 lg:p-10 border border-gray-100 hover:border-brand-blue/20 hover:shadow-lg transition-[border-color,box-shadow,transform] duration-300 ease-out hover:-translate-y-1.5 group flex flex-col justify-between min-h-[380px] h-full"
             >
-              <div className="flex items-start justify-between mb-5">
-                <div className="w-12 h-12 rounded-xl bg-brand-surface flex items-center justify-center text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-[background-color,color] duration-300 ease-out">
-                  {feature.icon}
+              <div>
+                <div className="flex items-start justify-between mb-8">
+                  <div className="w-12 h-12 rounded-xl bg-brand-surface flex items-center justify-center text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-[background-color,color] duration-300 ease-out">
+                    {feature.icon}
+                  </div>
+                  <span className={`text-xs font-semibold px-3 py-1 rounded-full ${feature.tagColor}`}>
+                    {feature.tag}
+                  </span>
                 </div>
-                <span className={`text-xs font-semibold px-3 py-1 rounded-full ${feature.tagColor}`}>
-                  {feature.tag}
-                </span>
+                <h3 className="font-display text-xl font-bold text-brand-dark mb-4">
+                  {feature.title}
+                </h3>
+                <p className="text-brand-gray text-sm leading-relaxed mb-6">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="font-display text-lg font-bold text-brand-dark mb-2.5">
-                {feature.title}
-              </h3>
-              <p className="text-brand-gray text-sm leading-relaxed">
-                {feature.description}
-              </p>
+
+              <div className="flex items-center text-xs font-bold text-brand-blue group-hover:text-brand-blue/80 transition-colors duration-200 mt-auto pt-4">
+                <span>Saber más</span>
+                <svg className="w-3.5 h-3.5 ml-1.5 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </div>
             </article>
           ))}
         </div>
